@@ -1,0 +1,40 @@
+ARG PYTHON_VERSION=3.10
+ARG ALPINE_VERSION=3.16
+ARG MAPPROXY_VERSION=1.15.1
+
+FROM python:${PYTHON_VERSION}-alpine${ALPINE_VERSION}
+
+ARG MAPPROXY_VERSION
+ENV MAPPROXY_PROCESSES 4
+ENV MAPPROXY_THREADS 2
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories \
+  && pip config set global.index-url https://mirrors.ustc.edu.cn/pypi/web/simple
+
+RUN set -x \
+  && apk add --no-cache --virtual .build-deps \
+    build-base \
+    proj-dev \
+  && apk add --no-cache \
+    proj-util \
+    geos-dev \
+    gdal-dev \
+    py3-lxml \
+    py3-shapely \
+    uwsgi \
+    uwsgi-python3 \
+  && pip install Pillow PyYAML pyproj six MapProxy==${MAPPROXY_VERSION} \
+  && apk del .build-deps \
+  && adduser -h /mapproxy -s /bin/sh -D mapproxy \
+  && mkdir -p /mapproxy \
+  && chown mapproxy /mapproxy \
+  && mkdir -p /docker-entrypoint-initmapproxy.d
+
+USER mapproxy
+COPY docker-entrypoint.sh /
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["mapproxy"]
+
+VOLUME ["/mapproxy"]
+EXPOSE 8080
+EXPOSE 9191
