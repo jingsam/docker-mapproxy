@@ -4,6 +4,10 @@
 
 * `1.15.1`, `1.15.1-alpine`
 
+## Supported platforms
+
+* `linux/amd64`, `linux/arm64`
+
 ## What is MapProxy
 
 [MapProxy](https://mapproxy.org/) is an open source proxy for geospatial data. It caches, accelerates and transforms
@@ -14,7 +18,7 @@ data from existing map services and serves any desktop or web GIS client.
 You can run the container with a command like this:
 
 ```bash
-docker run -v /path/to/mapproxy:/mapproxy -p 8080:8080 jingsam/mapproxy
+docker run -v /path/to/mapproxy:/mapproxy -p 8080:8080 jingsam/mapproxy:1.15.1
 ```
 
 *It is optional, but recommended to add a volume. Within the volume mapproxy get the configuration, or create one

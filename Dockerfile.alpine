@@ -25,6 +25,7 @@ RUN set -x \
     uwsgi-python3 \
   && pip install Pillow PyYAML pyproj six MapProxy==${MAPPROXY_VERSION} \
   && apk del .build-deps \
+  && rm -Rf /root/.cache \
   && adduser -h /mapproxy -s /bin/sh -D mapproxy \
   && mkdir -p /mapproxy \
   && chown mapproxy /mapproxy \
