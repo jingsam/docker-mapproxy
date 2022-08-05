@@ -37,7 +37,7 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: Dockerfile.apline
+          file: Dockerfile.alpine
           platforms: linux/amd64,linux/arm64
           push: true
           tags: jingsam/mapproxy:1.15.1-alpine

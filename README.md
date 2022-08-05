@@ -28,7 +28,7 @@ The container normally runs in [http-socket-mode](http://uwsgi-docs.readthedocs.
 run the image behind a HTTP-Proxy, like [Nginx](http://nginx.org/), you can run it in direct http-mode by running:
 
 ```bash
-docker run -v /path/to/mapproxy:/mapproxy -p 8080:8080 jingsam/mapproxy mapproxy http
+docker run -v /path/to/mapproxy:/mapproxy -p 8080:8080 jingsam/mapproxy:1.15.1 mapproxy http
 ```
 
 ### Environment variables
